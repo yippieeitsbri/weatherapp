@@ -37,78 +37,85 @@
         h6 {
          color: black 
         }
-        
-        .container{
+        ul {
+        list-style-type: none;
+        text-align: center;
+        }
+        .container {
         background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
         border: 10px solid white;
         border-radius: 20px;
 	      width: 75%;
         }
+        
         .style {
           font-size: 10px;
         }
-        .weekday{
+        .weekday,
+        .time {
           font-size: 18px;
           font-weight: bold;
         }
-        .today{
+        .sky,
+        .humid,
+        .rain,
+        .wind {
           font-size: 18px;
         }
-        .time {
-	        }
-          .p {
-
+        
+        .search,
+        .current-location {
+            border: 4px solid;
+            border-color: white;
+            background:  linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 15px;
+            color: black;
+            transition: all 200ms ease-in-out;
           }
-          .search,
-          .current-location {
-   border: 4px solid;
-  border-color: white;
-  background:  linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-  padding: 5px 15px;
-  border-radius: 10px;
-  font-size: 15px;
-  color: black;
-  transition: all 200ms ease-in-out;
+        .search:hover,
+        .current-location:hover{
+            border: 5px solid;
+            border-color: #ace0f9;
+            background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #ace0f9;
+            transition: all 200ms ease-in-out;
 }
-.search:hover,
-.current-location:hover{
-   border: 5px solid;
-  border-color: #ace0f9;
-  background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-  padding: 5px 15px;
-  border-radius: 10px;
-  font-size: 15px;
-  color: #ace0f9;
-  transition: all 200ms ease-in-out;
-}
-
 
 </style>
-<div class="container">
+
+
 <body>
+  <div class="container">
   <br>
   <h1>Laguna Beach</h1>
   
-  <center><strong> 
-    
-  <div class="col" id="current-date"></div>
-					<span class="weekday" id="weekday"> </span>
-    
-          
+  
+   <center><strong> 
+    <div class="container">
+    <div class="col" id="current-date"></div>
+		<span class="weekday" id="weekday"> </span>	
+    <span class="time" id="time"> </span>	
+     
   <div class="row align-items-start">
-    <div class="col"></div>
-  </strong> 
+    <div class="col">
+  </strong> <br>
       <h2><span style='font-size: 50px;'>☀️</span>
         <br>75°F</h2>
-        <h6>77°F / 52°F</p></h6>
-        
-    </div>
-    <div class="col">
-     
-      <div class="today">Partly cloudy, with a high of 77°F and low of 52°F
-    <br>
-    Humidity: 27% | Chance of Rain: 5% | Wind: 5 mph</div></em>
-    </div>
+        <h6>77°F / 52°F</h6>
+        </div>
+        <br>
+        <br>
+      <ul><em>
+        <li class="sky" id="sky">Partly cloudy</li>
+        <li class="humid" id="humid">Humidity: </li>
+        <li class="wind" id="wind">Wind: mph</li>
+        </em>
+    </div></div></ul>
    </center>
 <br>
 <div class="container">
@@ -175,6 +182,31 @@ let todayMinute = now.getMinutes();
 if (todayMinute < 10) {
   todayMinute = `0${todayMinute}`;
 }
+window.onload = function() {
+  clock();  
+    function clock() {
+    var now = new Date();
+    var TwentyFourHour = now.getHours();
+    var hour = now.getHours();
+    var min = now.getMinutes();
+    var sec = now.getSeconds();
+    var mid = 'pm';
+    if (min < 10) {
+      min = "0" + min;
+    }
+    if (hour > 12) {
+      hour = hour - 12;
+    }    
+    if(hour==0){ 
+      hour=12;
+    }
+    if(TwentyFourHour < 12) {
+       mid = 'am';
+    }     
+  document.getElementById('time').innerHTML =     hour+':'+min+':'+sec +' '+mid ;
+    setTimeout(clock, 1000);
+    }
+}
 
 
 
@@ -204,9 +236,9 @@ let months = [
   "December"
 ];
 let month = months[now.getMonth()];
-
 let weekday = document.querySelector("#weekday");
-weekday.innerHTML = `${day} - ${month} ${date}, ${year} - ${hours}:${todayMinute}`;
+
+weekday.innerHTML = `${day} - ${month} ${date}, ${year} - `;
 
 function search(event) {
   event.preventDefault();
@@ -214,6 +246,9 @@ function search(event) {
   let h1 = document.querySelector("h1");
   if (searchInput.value !== "") {
     h1.innerHTML = `${searchInput.value}`;
+    let apiKey = "bf54175800a55e59e6c4d6461deeef12";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&appid=${apiKey}&units=imperial`;
+    axios.get(apiUrl).then(showTemperature);
   } else {
     h1.innerHTML = `Please enter a city!`;
   }
@@ -222,21 +257,42 @@ function search(event) {
 let form = document.querySelector("form");
 form.addEventListener("submit", search);
 
-function showTemperature(response){
-  let temperature = Math.round(response.data.main.temp);
-  let h2 = document.querySelector("h2");
-  h2.innerHTML = `${temperature}}
+function showTemperature(response) {
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = response.data.name;
+  
+  let sky = response.data.weather[0].main;
+  let skyElement = document.querySelector("#sky");
+  skyElement.innerHTML = `Sky: ${sky}`;
 
-function retrievePosition(position) {
-let apiKey = "bf54175800a55e59e6c4d6461deeef12";
-let units = "imperial";
-let apiUrl = ``https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&units=${units}`;
-axios.get(apiUrl).then(showTemperature);
+  let temperature = Math.round(response.data.main.temp);
+  let humid = Math.round(response.data.main.humidity);
+  let humidElement = document.querySelector("#humid");
+  humidElement.innerHTML = `Humidity: ${humid}%`;
+
+  let wind = Math.round(response.data.wind.speed);
+  let windElement = document.querySelector("#wind");
+  windElement.innerHTML = `Wind: ${wind} mph`;
+
+  let h3 = document.querySelector("h2");
+  h3.innerHTML = `${temperature}°F`;
 }
 
-navigator.geolocation.getCurrentPosition(retrievePosition);
+function displayPosition(position) {
+  let apiKey = "bf54175800a55e59e6c4d6461deeef12";
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
+  axios.get(apiUrl).then(showTemperature);
+}
 
+function showLocation(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(displayPosition);
+}
 
+let currentLocation = document.querySelector(".current-location");
+currentLocation.addEventListener("click", showLocation);
 
 </script>   
 <footer>
