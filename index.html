@@ -51,6 +51,12 @@
         .style {
           font-size: 10px;
         }
+        .now {
+            font-size: 75px;
+        }
+        .emoji {
+            font-size: 30px;
+        }
         .weekday,
         .time {
           font-size: 18px;
@@ -104,7 +110,12 @@
   <div class="row align-items-start">
     <div class="col">
   </strong> <br>
-      <h2><span style='font-size: 50px;'>☀️</span>
+      <h2><span class="now">
+          <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="now"/>
+    </span>
         <br>75°F</h2>
         <h6>77°F / 52°F</h6>
         </div>
@@ -121,38 +132,64 @@
 <div class="container">
   <div class="row align-items-start">
     <div class="col">
-      <span style='font-size: 30px;'>☀️</span>
+        <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
       <p><strong>Monday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
       
     </div>
     <div class="col">
-      <span style='font-size: 30px;'>☀️</span>
+      <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
       <p><strong>Tuesday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-      <span style='font-size: 30px;'>🌤</span>
+      <span class="emoji"></span>
+      <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
       <p><strong>Wednesday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
      <div class="col">
-       <span style='font-size: 30px;'>🌤</span>
+       <span class="emoji"></span>
+      <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
      <p><strong>Thursday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-      <span style='font-size: 30px;'>🌤</span>
+     <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
       <p><strong>Friday</strong> 
      <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-      <span style='font-size: 30px;'>🌤</span>
+      <span class="emoji"></span>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+          alt="clear"
+          id="icon"
+          class="emoji"/>
       <p><strong>Saturday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
@@ -276,6 +313,10 @@ function showTemperature(response) {
 
   let h3 = document.querySelector("h2");
   h3.innerHTML = `${temperature}°F`;
+
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute("src",`"http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+  iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
 function displayPosition(position) {
