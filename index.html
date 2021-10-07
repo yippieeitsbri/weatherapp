@@ -30,6 +30,13 @@
           font-size: 50px;
           color: blue;
           font-weight: bold;
+          display: inline-block;
+        }
+        h4 {
+           display: inline-block; 
+           color: blue;
+           vertical-align: super
+            
         }
         h5 {
           color: blue;
@@ -52,7 +59,7 @@
           font-size: 10px;
         }
         .now {
-            font-size: 75px;
+            font-size: 50px;
         }
         .emoji {
             font-size: 30px;
@@ -96,7 +103,7 @@
 
 
 <body>
-  <div class="container">
+ <div class="container">
   <br>
   <h1>Laguna Beach</h1>
   
@@ -109,15 +116,22 @@
      
   <div class="row align-items-start">
     <div class="col">
-  </strong> <br>
-      <h2><span class="now">
-          <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="now"/>
-    </span>
-        <br>75°F</h2>
-        <h6>77°F / 52°F</h6>
+  </strong> 
+  <br>
+      <img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
+                  alt="sky"
+                  id="icon"
+                  class="now"
+                />
+        <br>
+        <h2>75°</h2>
+         <span id="temperature"></span>
+                  <span class="grados-link">
+                    <a href="#" id="fahrenheit-link" class="active">°F</a>
+                    <span style="font-weight: 400">|</span>
+                    <a href="#" id="fahrenheit-link">°C</a>
+                  </span>
+        <h6>High: 77°F | Low: 52°F</h6>
         </div>
         <br>
         <br>
@@ -132,64 +146,38 @@
 <div class="container">
   <div class="row align-items-start">
     <div class="col">
-        <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+        <span class="emoji">☀️</span>
       <p><strong>Monday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
       
     </div>
     <div class="col">
-      <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+      <span class="emoji">☀️</span>
       <p><strong>Tuesday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-      <span class="emoji"></span>
-      <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+     <span class="emoji">☀️</span>
       <p><strong>Wednesday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
      <div class="col">
-       <span class="emoji"></span>
-      <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+     <span class="emoji">☀️</span>
      <p><strong>Thursday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-     <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+     <span class="emoji">☀️</span>
       <p><strong>Friday</strong> 
      <h5>79°F</h5>
       <h6>55°F</h6>
     </div>
     <div class="col">
-      <span class="emoji"></span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-          alt="clear"
-          id="icon"
-          class="emoji"/>
+      <span class="emoji">☀️</span>
       <p><strong>Saturday</strong> 
       <h5>79°F</h5>
       <h6>55°F</h6>
@@ -311,12 +299,14 @@ function showTemperature(response) {
   let windElement = document.querySelector("#wind");
   windElement.innerHTML = `Wind: ${wind} mph`;
 
-  let h3 = document.querySelector("h2");
-  h3.innerHTML = `${temperature}°F`;
-
   let iconElement = document.querySelector("#icon");
   iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   iconElement.setAttribute("alt", response.data.weather[0].description);
+
+  let h2 = document.querySelector("h2");
+  h2.innerHTML = `${temperature}°`;
+
+  
 }
 
 function displayPosition(position) {
