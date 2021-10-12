@@ -156,16 +156,22 @@
   
 
 <br>
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col">
-        <p><strong>Monday</strong> 
-            <br>
-        <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-      
-    </div>
+  <div class="container">
+  <div class="weather-forecast" id="forecast">
+    <div class="row">
+<div class="col-2">
+<div class="weather-forecast-date">Monday</div>
+<img src="http://openweathermap.org/img/wn/50d@2x.png"
+                  alt=""
+                  width="42"
+                />
+<div class="weather-forecast-temperature">
+  <span class="weather-forecast-temperature-max">79°F</span>    
+  <span class="weather-forecast-temperature-min">49°F</span>  
+   </div>
+   </div>
+   </div>
+   </div>
     <div class="col">
         <p><strong>Tuesday</strong> 
             <br>
@@ -370,6 +376,29 @@ function showLocation(event) {
 let currentLocation = document.querySelector(".current-location");
 currentLocation.addEventListener("click", showLocation);
 
+function displayForecast() {
+
+let forecastElement = document.querySelector("#forecast");
+
+let forecastHTML = `<div class=“row”>`;
+let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+days.forEach(function (day){
+forecastHTML = forecastHTML+
+` <div class="col-2">
+<div class="weather-forecast-date”>${day}</div>
+<img src="http://openweathermap.org/img/wn/50d@2x.png"
+                  alt=""
+                  width="42"
+                />
+<div class="weather-forecast-temperature">
+  <span class="weather-forecast-temperature-max">79°F</span>    
+  <span class="weather-forecast-temperature-min">49°F</span>  
+   </div>
+   </div> `;
+} ) ;
+forecastHTML = forecastHTML+ ` </div> `;
+
+forecastElement.innerHTML = forecastHTML;}
 </script>   
 
   <br>
