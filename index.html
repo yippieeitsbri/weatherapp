@@ -11,12 +11,13 @@
       integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
       crossorigin="anonymous"
     />
+    
     <script src="https://kit.fontawesome.com/474b7faebb.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <style>
         body{
-            background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+            background: radial-gradient(circle at 10% 20%, rgb(75, 108, 183) 0%, rgb(55, 82, 141) 90%);
             background-repeat: no-repeat;
             background-attachment: fixed; 
             background-size: cover;
@@ -53,14 +54,26 @@
         
         }
         .container {
-        
+        background: white;
         border: 10px solid white;
         border-radius: 20px;
 	      width: 75%;
         }
         
-        .style {
-          font-size: 10px;
+        
+        .weather-forecast {
+          
+        }
+        .weather-forecast-date {
+          font-weight: bold;
+        }
+        .weather-forecast-temperature-max{
+          font-weight: bold;
+            color: blue;
+        }
+        .weather-forecast-temperature-min{
+          color: black;
+          opacity: 0.5;
         }
         .now {
             font-size: 50px;
@@ -84,29 +97,43 @@
         .wind {
           font-size: 18px;
         }
-        
-        .search,
         .current-location {
-            
-            border: 4px solid;
+          border: 3px solid;
+          background: white;
+          border-radius: 10px;
+          border-color: white;
+          color: blue;
+          transition: all 200ms ease-in-out;
+        }
+        .search{
+            border: 5px solid;
             border-color: white;
             background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
             padding: 5px 15px;
             border-radius: 10px;
-            font-size: 15px;
-            color: black;
+            font-size: 18px;
+            color: blue;
             transition: all 200ms ease-in-out;
           }
-        .search:hover,
-        .current-location:hover{
+          .current-location:hover{
+            border: 3px solid;
+            border-color: white;
             
-            border: 5px solid;
-            border-color: #ace0f9;
+            padding: 5px 5px;
+            border-radius: 10px;
+            font-size: 18px;
+            color: blue;
+            transition: all 200ms ease-in-out;
+          }
+        .search:hover{
+            cursor: pointer;
+            border: 3px solid;
+            border-color: white;
             background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
             padding: 5px 15px;
             border-radius: 10px;
-            font-size: 15px;
-            color: #ace0f9;
+            font-size: 18px;
+            color: black;
             transition: all 200ms ease-in-out;
 }
 
@@ -120,8 +147,8 @@
 <div class="container">
   <div class="row">
     <div class="col-4"><br>
-      <h1>Laguna Beach</h1>
-      
+      <h1>Laguna Beach</h1> <button type="submit" class="current-location"><i class="fas fa-map-marker-alt"></i></button>
+
     </div>
 
  <div class="date" id="current-date"></div>
@@ -136,16 +163,17 @@
                   class="now"
                 />
        <br>
-        <h2>75°F</h2></span>
+        <h2>75°F</h2>
+      </span>
         
         
    
     <br><br>
       <ul><em>
-        <h6>High: 77°F 
-           Low: 52°F</h6>
-        <li class="sky" id="sky">Partly cloudy</li>
-        <li class="humid" id="humid">Humidity: </li>
+        <span class="weather-forecast-temperature-max"></span> 
+        <span class="weather-forecast-temperature-min"></span> 
+        <li class="sky" id="sky">Sky:</li>
+        <li class="humid" id="humid">Humidity: %</li>
         <li class="wind" id="wind">Wind: mph</li>
         </em></ul>
 
@@ -172,19 +200,19 @@
    </div>
    </div>
    </div>
-    
-        </div>  
-<br><center>
- <button type="submit" class="current-location">Current Location📍</button> 
-<p><form>
+  </div>  
+<br>
+<center>
+ 
+  <form>
   <input type="text" 
-  placeholder="Search New City" 
+  placeholder="Search new city" 
   autocomplete="off"
   autofocus="on"
   id="search-text-input" />
-  <button type="submit" class="search">Search 🔍</button>
-   </form>
-</center>
+  <button type="submit" class="search">Search</button>  
+  </form>
+</center></div>
 
 <script>
 let now = new Date();
@@ -260,13 +288,19 @@ function search(event) {
   let h1 = document.querySelector("h1");
   if (searchInput.value !== "") {
     h1.innerHTML = `${searchInput.value}`;
-    let apiKey = "bf54175800a55e59e6c4d6461deeef12";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&appid=${apiKey}&units=imperial`;
-    axios.get(apiUrl).then(showTemperature);
+    searchCity(searchInput.value);
   } else {
     h1.innerHTML = `Please enter a city!`;
   }
 }
+
+function searchCity(city) { 
+  let apiKey = "bf54175800a55e59e6c4d6461deeef12";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  axios.get(apiUrl).then(showTemperature);
+}
+
+searchCity("laguna beach");
 
 let form = document.querySelector("form");
 form.addEventListener("submit", search);
@@ -363,6 +397,9 @@ forecastHTML = forecastHTML+ ` </div> `;
 
 forecastElement.innerHTML = forecastHTML;
 }
+
+
+
 </script>   
 
   <br>
