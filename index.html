@@ -17,7 +17,7 @@
 </head>
 <style>
         body{
-            background: radial-gradient(circle at 10% 20%, rgb(75, 108, 183) 0%, rgb(55, 82, 141) 90%);
+          background: white;
             background-repeat: no-repeat;
             background-attachment: fixed; 
             background-size: cover;
@@ -25,45 +25,46 @@
           
             }
         h1 {
-            display: inline-block; 
-        color: blue;
+          display: inline-block; 
+          color: blue;
           font-family: 'Kaisei Tokumin', serif;
         }
         h2 {
           font-size: 50px;
           color: blue;
           font-weight: bold;
-          display: inline-block;
+          text-align: center;
         }
-        h4 {
-           display: inline-block; 
-           color: blue;
-           vertical-align: super
-            
-        }
+        
         h5 {
-          color: blue;
-          
+          color: blue; 
         }
         h6 {
          color: black;
-       
         }
         ul {
         list-style-type: none;
         
         }
         .container {
-        background: white;
-        border: 10px solid white;
+        background: linear-gradient(-225deg, #5D9FFF 0%, #B8DCFF 48%, #6BBBFF 100%);
+        max-width: 600px;
+        margin: 0 auto;
         border-radius: 20px;
-	      width: 75%;
+        padding: 20px 0;
+	      
         }
-        
+        .weather-app {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px 50px;
+        }
         
         .weather-forecast {
-          
+        border-radius: 20px;
+        padding: 10px 0;
         }
+        
         .weather-forecast-date {
           font-weight: bold;
         }
@@ -76,12 +77,7 @@
           opacity: 0.5;
         }
         .now {
-            font-size: 50px;
-            margin: 0;
-            padding: 0;
-        }
-        .emoji {
-            font-size: 30px;
+          font-size: 50px;
         }
         .weekday,
         .time {
@@ -93,23 +89,24 @@
         }
         .sky,
         .humid,
-        .rain,
         .wind {
           font-size: 18px;
+          text-align: center;
+          
         }
         .current-location {
           border: 3px solid;
-          background: white;
+          background-color: transparent;
           border-radius: 10px;
           border-color: white;
           color: blue;
           transition: all 200ms ease-in-out;
         }
         .search{
-            border: 5px solid;
+            border: 3px solid;
             border-color: white;
-            background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-            padding: 5px 15px;
+            background-color: transparent;
+            padding: 3px 3px;
             border-radius: 10px;
             font-size: 18px;
             color: blue;
@@ -118,81 +115,71 @@
           .current-location:hover{
             border: 3px solid;
             border-color: white;
-            
-            padding: 5px 5px;
+            background-color: transparent;
+            padding: 3px 3px;
             border-radius: 10px;
             font-size: 18px;
-            color: blue;
+            color: black;
+            font-weight: bold;
             transition: all 200ms ease-in-out;
           }
         .search:hover{
             cursor: pointer;
             border: 3px solid;
             border-color: white;
-            background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-            padding: 5px 15px;
+            background-color: transparent;
+            padding: 5px 5px;
             border-radius: 10px;
             font-size: 18px;
             color: black;
-            transition: all 200ms ease-in-out;
+           transition: all 200ms ease-in-out;
 }
 
 
 </style>
-
-
 <body>
- <center><strong>
-  
-<div class="container">
-  <div class="row">
-    <div class="col-4"><br>
-      <h1>Laguna Beach</h1> <button type="submit" class="current-location"><i class="fas fa-map-marker-alt"></i></button>
-
-    </div>
-
- <div class="date" id="current-date"></div>
+<center>
+<strong>
+  <div class="container">
+<div class="weather-app">
+<h1>Laguna Hills</h1> <button type="submit" class="current-location"><i class="fas fa-map-marker-alt"></i></button>
+<ul>
+<li>
+<div class="date" id="current-date"></div>
+</li>
 <span class="weekday" id="weekday"> </span>	
 <span class="time" id="time"> </span>
 </strong>
-
-    <span>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
-                  alt="sky"
-                  id="icon"
-                  class="now"
-                />
-       <br>
-        <h2>75°F</h2>
-      </span>
-        
-        
-   
-    <br><br>
-      <ul><em>
-        <span class="weather-forecast-temperature-max"></span> 
-        <span class="weather-forecast-temperature-min"></span> 
-        <li class="sky" id="sky">Sky:</li>
-        <li class="humid" id="humid">Humidity: %</li>
-        <li class="wind" id="wind">Wind: mph</li>
-        </em></ul>
-
-    </span>
-  </div>
+</ul>
+<center>
+<div class="col-8">
+<img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
+      alt="sky"
+      id="icon"
+      class="now"/>
+<br>
+<h2>75°F</h2>
 </div>
 
-  
+<ul>
+<em>
+<li class="sky" id="sky">Sky:</li>
+<li class="humid" id="humid">Humidity: %</li>
+<li class="wind" id="wind">Wind: mph</li>
+</em></ul>
+<span class="weather-forecast-temperature-max"></span> 
+<span class="weather-forecast-temperature-min"></span> 
 
 <br>
-  <div class="container">
-  <div class="weather-forecast" id="forecast">
-    <div class="row">
-<div class="col-2">
+  
+<div class="weather-forecast" id="forecast">
+<div class="row">
+<div class="col-8">
 <div class="weather-forecast-date">Monday</div>
 <img src="http://openweathermap.org/img/wn/50d@2x.png"
-                  alt=""
-                  width="42"
-                />
+      alt=""
+      width="42"/>
+
 <div class="weather-forecast-temperature">
   <span class="weather-forecast-temperature-max">79°F</span>    
   <span class="weather-forecast-temperature-min">49°F</span>  
@@ -201,9 +188,7 @@
    </div>
    </div>
   </div>  
-<br>
-<center>
- 
+
   <form>
   <input type="text" 
   placeholder="Search new city" 
@@ -212,7 +197,9 @@
   id="search-text-input" />
   <button type="submit" class="search">Search</button>  
   </form>
-</center></div>
+  </div></div></div>
+ 
+</center>
 
 <script>
 let now = new Date();
@@ -300,7 +287,7 @@ function searchCity(city) {
   axios.get(apiUrl).then(showTemperature);
 }
 
-searchCity("laguna beach");
+searchCity("laguna hills");
 
 let form = document.querySelector("form");
 form.addEventListener("submit", search);
