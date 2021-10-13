@@ -172,42 +172,7 @@
    </div>
    </div>
    </div>
-    <div class="col">
-        <p><strong>Tuesday</strong> 
-            <br>
-      <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-    </div>
-    <div class="col">
-        <p><strong>Wednesday</strong> 
-            <br>
-     <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-    </div>
-     <div class="col">
-         <p><strong>Thursday</strong> 
-            <br>
-     <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-    </div>
-    <div class="col">
-        <p><strong>Friday</strong> 
-            <br>
-      <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-    </div>
-    <div class="col">
-        <p><strong>Saturday</strong> 
-            <br>
-      <span class="emoji">☀️</span>
-      <h5>79°F</h5>
-      <h6>55°F</h6>
-    </div>
-     </div>     
+    
         </div>  
 <br><center>
  <button type="submit" class="current-location">Current Location📍</button> 
@@ -330,6 +295,7 @@ function showTemperature(response) {
   let h2 = document.querySelector("h2");
   h2.innerHTML = `${temperature}°F`;
 
+  getForecast(response.data.coord);
 }
 
 
@@ -351,7 +317,27 @@ function showLocation(event) {
 let currentLocation = document.querySelector(".current-location");
 currentLocation.addEventListener("click", showLocation);
 
-function displayForecast() {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  return days[date.getDay()];
+}
+
+function getForecast(coordinates) {
+  let apiKey = "bf54175800a55e59e6c4d6461deeef12";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=imperial`;
+    axios.get(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
 let forecast = response.data.daily;
 let forecastElement = document.querySelector("#forecast");
 
@@ -368,16 +354,15 @@ if (index < 6) {
                   width="42"
                 />
 <div class="weather-forecast-temperature">
-  <span class="weather-forecast-temperature-max">${Math.round(forecastDay.temperature.max)}°F</span>    
-  <span class="weather-forecast-temperature-min">${Math.round(forecastDay.temperature.min)}°F</span>  
+  <span class="weather-forecast-temperature-max">${Math.round(forecastDay.temp.max)}°F</span>    
+  <span class="weather-forecast-temperature-min">${Math.round(forecastDay.temp.min)}°F</span>  
    </div>
    </div> `;
-} ) ;
+} });
 forecastHTML = forecastHTML+ ` </div> `;
 
 forecastElement.innerHTML = forecastHTML;
 }
-displayForecast();
 </script>   
 
   <br>
